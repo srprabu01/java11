@@ -1,0 +1,68 @@
+import java.util.Random;
+class Rnd extends Thread
+{
+ int x;
+ Rnd(int n)
+ {
+   x = n;
+ }
+ }
+ public int run()
+ {
+ Random random = new Random();
+ int randomInteger = random.nextInt(x);
+ System.out.println("Random Integer generated : " + randomInteger);
+ return randomInteger;
+ }
+}
+class Square extends Thread
+{
+ int x;
+ Square(int n)
+ {
+ x = n;
+ }
+ public int run()
+ {
+    int sqr = x * x;
+    System.out.println("Square of " + x + " = " + sqr );
+     return sqr;
+   }
+
+}
+class Cube extends Thread
+{
+ int x;
+ Cube(int n)
+ {
+ x = n;
+ }
+ public void run()
+ {
+ int cub = x * x * x;
+ System.out.println("Cube of " + x + " = " + cub );
+ }
+}
+class Number extends Thread
+{
+ public void run()
+ {
+ Rnd r = new Rnd(100);
+ int randomInteger=r.start();
+ if((randomInteger%2) == 0) {
+    Square s = new Square(randomInteger);
+    int sq=s.start();
+    if((sq%2)!=0)
+    {
+ 	Cube c = new Cube(randomInteger);
+ 	c.start();
+     }
+ }
+ try {
+ Thread.sleep(1000);
+ } catch (InterruptedException ex) {
+ System.out.println(ex);
+}
+ }
+ }
+}

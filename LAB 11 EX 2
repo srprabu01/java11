@@ -1,0 +1,66 @@
+import java.io.*; 
+import java.util.*; 
+class Sender 
+{ 
+    public void send(String name) 
+    { 
+       int c=5;
+       System.out.println("Searching cab for"  + name ); 
+       if(c>0)
+         {
+             System.out.println("cab is available for" +msg);
+          }
+        else{
+            System.out.println("Sorry cab is not available wait for few minutes...");
+            break;
+         }
+        try
+        { 
+            Thread.sleep(1000); 
+            System.out.println(" your booking is conformed:)" ); 
+        } 
+        catch (Exception e) 
+        { 
+            System.out.println("Thread  interrupted."); 
+        } 
+        
+    } 
+} 
+ 
+class ThreadedSend extends Thread 
+{ 
+    private String name; 
+    Sender  object; 
+    ThreadedSend(String n,  Sender obj) 
+    { 
+        name = n; 
+        object = obj; 
+    } 
+  
+    public void run() 
+    { 
+        synchronized(object) 
+        { 
+          object.send(name); 
+        } 
+    } 
+} 
+  
+class SyncDemo 
+{ 
+    public static void main(String args[]) 
+    { 
+        Sender snd = new Sender(); 
+        ThreadedSend S1 = 
+            new ThreadedSend( "RamaKrishnan", snd );
+        S1.start(); 
+        try
+        { 
+            S1.join();
+        } 
+        catch(Exception e) 
+        { 
+            System.out.println("Interrupted"); 
+        } 
+    } 
+} 
